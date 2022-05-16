@@ -1,7 +1,7 @@
 pipeline { 
     tools{
-	jdk 'java1.8'
-	maven 'maven_new'
+	jdk "java1.8"
+	maven "maven_new"
     }
     agent any 
     stages {
@@ -9,14 +9,14 @@ pipeline {
             steps {
                 //withMaven(maven : 'apache-maven-3.6.0'){
                         sh "mvn compile"
-                }
+                //}
             }
         }
 	stage('Code Review'){
            steps {
                 //withMaven(maven : 'apache-maven-3.6.0'){
                         sh "mvn pmd:pmd"
-                }
+                //}
 
             }
         }
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 //withMaven(maven : 'apache-maven-3.6.0'){
                         sh "mvn test"
-                }
+                //}
 
             }
         }
@@ -32,7 +32,7 @@ pipeline {
             steps {
                 //withMaven(maven : 'apache-maven-3.6.0'){
                         sh "mvn cobertura:cobertura -D cobertura.reports.format=xml"
-                }
+                //}
 
             }
         }
@@ -40,7 +40,7 @@ pipeline {
             steps {
                 //withMaven(maven : 'apache-maven-3.6.0'){
                         sh "mvn package"
-                }
+                //}
 
             }
         }
