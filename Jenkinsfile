@@ -5,11 +5,6 @@ pipeline {
     }
     agent any 
     stages {
-	stage ('Clone') {
-		steps {
-			git 'https://github.com/chinmaypatil8292/HelloWorldMaven.git'
-		}
-	}
         stage('Compile') { 
             steps {
                 //withMaven(maven : 'apache-maven-3.6.0'){
