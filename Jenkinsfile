@@ -3,14 +3,14 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                withMaven(maven : 'apache-maven-3.6.0'){
-                        sh "mvn clean compile"
+                //withMaven(maven : 'apache-maven-3.6.0'){
+                        sh "mvn compile"
                 }
             }
         }
 	stage('Code Review'){
            steps {
-                withMaven(maven : 'apache-maven-3.6.0'){
+                //withMaven(maven : 'apache-maven-3.6.0'){
                         sh "mvn pmd:pmd"
                 }
 
@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Unit Testing'){
             steps {
-                withMaven(maven : 'apache-maven-3.6.0'){
+                //withMaven(maven : 'apache-maven-3.6.0'){
                         sh "mvn test"
                 }
 
@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Code Coverage'){
             steps {
-                withMaven(maven : 'apache-maven-3.6.0'){
+                //withMaven(maven : 'apache-maven-3.6.0'){
                         sh "mvn cobertura:cobertura -D cobertura.reports.format=xml"
                 }
 
@@ -34,7 +34,7 @@ pipeline {
         }
 	stage('Package'){
             steps {
-                withMaven(maven : 'apache-maven-3.6.0'){
+                //withMaven(maven : 'apache-maven-3.6.0'){
                         sh "mvn package"
                 }
 
