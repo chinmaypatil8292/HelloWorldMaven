@@ -8,7 +8,15 @@ pipeline {
                 }
             }
         }
-        stage('Test'){
+	stage('Code Review'){
+           steps {
+                withMaven(maven : 'apache-maven-3.6.0'){
+                        sh "mvn pmd:pmd"
+                }
+
+            }
+        }
+        stage('Unit Testing'){
             steps {
                 withMaven(maven : 'apache-maven-3.6.0'){
                         sh "mvn test"
@@ -16,30 +24,29 @@ pipeline {
 
             }
         }
-        stage('build && SonarQube analysis') {
+        stage('Code Coverage'){
             steps {
-                withSonarQubeEnv('sonar.tools.devops.****') {
-                    sh 'sonar-scanner -Dsonar.projectKey=myProject -Dsonar.sources=./src'
-                }
-            }
-        }
-        stage("Quality Gate") {
-            steps {
-                timeout(time: 1, unit: 'HOURS') {
-                    // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
-                    // true = set pipeline to UNSTABLE, false = don't
-                    // Requires SonarScanner for Jenkins 2.7+
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-			}
-        stage('Deploy') {
-            steps {
-               withMaven(maven : 'apache-maven-3.6.0'){
-                        sh "mvn deploy"
+                withMaven(maven : 'apache-maven-3.6.0'){
+                        sh "mvn cobertura:cobertura -D cobertura.reports.format=xml"
                 }
 
             }
         }
+	stage('Package'){
+            steps {
+                withMaven(maven : 'apache-maven-3.6.0'){
+                        sh "mvn package"
+                }
+
+            }
+        }
+        //stage('Deploy') {
+          //  steps {
+            //   withMaven(maven : 'apache-maven-3.6.0'){
+              //          sh "mvn deploy"
+                //}
+
+            //}
+        //}
     }
 }
