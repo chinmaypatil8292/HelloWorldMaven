@@ -1,7 +1,16 @@
 pipeline { 
+    tools{
+	jdk 'java1.8'
+	maven 'maven_new'
+    }
     agent any 
     stages {
-        stage('Build') { 
+	stage ('Clone') {
+		steps {
+			git 'https://github.com/chinmaypatil8292/HelloWorldMaven.git'
+		}
+	}
+        stage('Compile') { 
             steps {
                 //withMaven(maven : 'apache-maven-3.6.0'){
                         sh "mvn compile"
